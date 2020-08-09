@@ -40,11 +40,15 @@ def uploader():
         print("zip creado")
         archivo.close()
 
-        shutil.move("archivo.zip", rutaDescargas)
+        shutil.move("archivo.zip", rutaDescargas)           
         print("archivo fue enviado a descargas")
 
-        with ZipFile(rutaDescargas+'\\archivo.zip','r') as myzip:
-            myzip.extractall()
+        archivito = open(rutaDescargas+ '\\'+ filename,'w')
+
+        with ZipFile(rutaDescargas+'\\archivo.zip','r') as myzip:           #extrae el archivo
+            myzip.extractall('Descargas')
+
+        archivito.close()
 
         return 'subido exitosamente'
     
