@@ -3,6 +3,7 @@ from zipfile import ZipFile
 import shutil
 from flask import Flask , request, render_template
 from werkzeug.utils import secure_filename
+from zipModulo import empaquetar, desempaquetar
 
 app= Flask (__name__)
 
@@ -32,21 +33,27 @@ def uploader():
 
         rutaSubidos= os.getcwd()+'\\subidos'
         rutaDescargas = os.getcwd()+'\\Descargas'
+
         archivo = open(rutaSubidos+'\\'+ filename,'r')
         
-        myzip = ZipFile("archivo.zip",'w')
+        """myzip = ZipFile("archivo.zip",'w')
         myzip.write (rutaSubidos+'\\'+filename, os.path.basename(filename)) #busco el archivo en la carpeta subidos
         myzip.close()
-        print("zip creado")
+        print("zip creado")"""
+
+        empaquetar(rutaSubidos+'\\'+filename, os.path.basename(filename))   #llamo al modulo
+
         archivo.close()
 
         shutil.move("archivo.zip", rutaDescargas)           
         print("archivo fue enviado a descargas")
 
         archivito = open(rutaDescargas+ '\\'+ filename,'w')
-
+        """
         with ZipFile(rutaDescargas+'\\archivo.zip','r') as myzip:           #extrae el archivo
             myzip.extractall('Descargas')
+        """
+        desempaquetar(rutaDescargas)                                #llamo al modulo
 
         archivito.close()
 
