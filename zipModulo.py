@@ -12,9 +12,14 @@ def desempaquetar(rutaComprimido):
             myzip.extractall('Descargas')
 
 def empaquetar2(rutaArchivo,baseName):
-    zf = zipfile.ZipFile("myzipfile.zip", "w")
+    zf = ZipFile("myzipfile.zip", "w")
     for dirname, subdirs, files in os.walk(rutaArchivo):
-        zf.write(dirname,baseName)
-        for filename in files:
-            zf.write(os.path.join(dirname, filename))
+        #zf.write(os.path.basename(dirname))
+        for file in files:
+            zf.write(os.path.join(dirname, file),arcname=file)
     zf.close()
+    print("zip creado")
+
+def desempaquetar2(rutaComprimido):
+    with ZipFile(rutaComprimido+'\\myzipfile.zip','r') as myzip:           #extrae el archivo
+            myzip.extractall('Descargas')
